@@ -3,13 +3,12 @@ from .rest_functions import post_item, get_item, put_item, get_items, delete_ite
 
 from functools import wraps
 
-def create_routes(app, route, model, prefix):
+def create_routes(app, db, route, model, prefix):
   def CreateFunction(func):
     func.__name__ += route
     @wraps(func)
     def decorated_function(*args, **kwargs):
       return func(*args, **kwargs)
-
     return decorated_function
 
   @app.route(f'/{prefix}/{route}', methods=['POST', 'GET'])
@@ -31,7 +30,7 @@ def create_routes(app, route, model, prefix):
         }
       },
     }
-    print(model)
+    
     method = methods.get(request.method).get('method')
     result = method(**methods.get(request.method).get('kwargs'))
     return result
@@ -52,7 +51,8 @@ def create_routes(app, route, model, prefix):
         'kwargs': {
           'model': model,
           'item_id': item_id,
-          'data': request.get_json()
+          'data': request.get_json(),
+          'session': db.session
         }
       },
       'DELETE': {

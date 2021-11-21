@@ -1,8 +1,14 @@
 def get_item(model, item_id):
   raise NotImplementedError
 
-def put_item(model, item_id, data):
-  raise NotImplementedError
+def put_item(session, model, item_id, data):
+  item = model.query.get_or_404(item_id)
+  for key, value in data.items():
+    setattr(item, key, value)
+
+  session.add(item)
+  session.commit()
+  return {'status_code': 200, 'message': 'success'}
 
 def delete_item(model, item_id):
   raise NotImplementedError
@@ -19,7 +25,7 @@ def get_items(model, filters):
     new_result = dict((key, getattr(result, key)) for key in item_columns)
     output_results.append(new_result)
 
-  return {'count': len(results), 'results': output_results}
+  return {'status_code': 200, 'count': len(results), 'results': output_results}
 
 
 

@@ -6,7 +6,13 @@ from sqlalchemy.sql import text
 
 DATA_DIR = os.environ.get('DATA_DIR')
 
+def clean_column_name(column):
+  column = column.replace(' ', '_')
+  return column.upper()
+
 def clean_dataframe(df):
+  df.columns = map(clean_column_name, df.columns)
+  df['SELECTED'] = False
   df = df.apply(lambda x: x.str.strip() if x.dtype == "object" else x)
   df = df.replace({
     '': None
@@ -21,7 +27,6 @@ def dataframe_to_table(df, engine, name):
     connection.execute(stmt)
 
 def create_tables(engine):
-  print(DATA_DIR)
   df = pd.read_excel(os.path.join(DATA_DIR, 'Enodo_Skills_Assessment_Data_File.xlsx'))
   df = clean_dataframe(df)
   dataframe_to_table(df, engine, 'properties')

@@ -3,6 +3,7 @@ import os
 from flask import Flask, jsonify, request
 
 from flask_sqlalchemy import SQLAlchemy
+from flask_cors import CORS
 
 from .config import CONFIGS
 from .utils.model_generator import create_models
@@ -14,6 +15,7 @@ PREFIX = os.environ.get('PREFIX', 'dev')
 def create_app():
   app = Flask(__name__)
   env = os.environ.get('ENV', 'DEV')
+  CORS(app)
   app.config.from_object(CONFIGS.get(env))
   return app
   
@@ -24,9 +26,8 @@ db.Model.metadata.reflect(db.engine)
 
 models = create_models(db)
 
-create_routes(app, 'properties', models.get('properties'), PREFIX)
+create_routes(app, db, 'properties', models.get('properties'), PREFIX)
 
-print(app.url_map)
 @app.route(f'/')
 def health_check():
   return jsonify({'message': 'success'})

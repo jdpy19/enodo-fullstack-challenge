@@ -1,13 +1,5 @@
 version: "3.9"
 services:
-  db:
-    image: postgres
-    ports:
-      - "5432:5432"
-    volumes:
-      - ./data/db:/var/lib/postgresql/data
-    environment:
-      - POSTGRES_PASSWORD=postgres
   api:
     build: ./api
     command: python wsgi.py
@@ -19,12 +11,17 @@ services:
       - ./api/.env
     depends_on:
       - db
+  db:
+    image: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./data/db:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=postgres  
   ui:
     build: ./ui
-    command: npm run build
+    command: npm run serve
     ports:
       - "8080:8080"
-    depends_on:
-      - db
-      - api
     

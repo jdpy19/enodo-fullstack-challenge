@@ -1,13 +1,10 @@
 # Enodo Fullstack Engineering Challenge
-
 Welcome to our Fullstack Engineering Challenge repository. This README will guide you on how to participate in this challenge.
 
 Please fork this repo before you start working on the challenge. We will evaluate the code on the fork.
 
 
 ## Challenge
-
-
 Front-end and backend to allow users to search, select, or unselect properties from the DB.
 
 ## Requirements

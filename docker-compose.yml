@@ -19,3 +19,12 @@ services:
       - ./api/.env
     depends_on:
       - db
+  ui:
+    build: ./ui
+    command: npm run build
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+      - api
+    

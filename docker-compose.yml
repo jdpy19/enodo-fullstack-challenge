@@ -10,7 +10,8 @@ services:
     env_file:
       - ./api/.env
     depends_on:
-      - db
+      db:
+        condition: service_healthy
   db:
     image: postgres
     ports:
@@ -18,7 +19,9 @@ services:
     volumes:
       - ./data/db:/var/lib/postgresql/data
     environment:
-      - POSTGRES_PASSWORD=postgres  
+      - POSTGRES_PASSWORD=postgres
+    healthcheck:
+      test: pg_isready -U postgres
   ui:
     build: ./ui
     command: npm run serve

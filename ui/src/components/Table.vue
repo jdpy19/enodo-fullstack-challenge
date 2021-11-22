@@ -101,7 +101,11 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
-  h1 {
-    color: $primary
+  .search {
+    margin: 1em;
+  }
+  .table-with-search {
+    margin: 1em;
+    padding: 1em;
   }
 </style>

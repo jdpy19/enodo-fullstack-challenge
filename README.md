@@ -24,6 +24,12 @@ Front-end and backend to allow users to search, select, or unselect properties f
 ## Prerequisites
 - Docker installed on your machine, version 4.0.0 was used to develop this project
 
+## Unit Testing
+- API: Run unittests locally
+  - cd api
+  - pipenv install
+  - pipenv run python -m unittest discover tests
+
 ## Instructions
 - Clone this repository: git clone git@github.com:jdpy19/enodo-fullstack-challenge.git
 - Enter directory: cd enodo-fullstack-challenge

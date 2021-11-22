@@ -1,7 +1,7 @@
 
 import os
 import pandas as pd
-from sqlalchemy import create_engine
+import numpy as np
 from sqlalchemy.sql import text
 
 DATA_DIR = os.environ.get('DATA_DIR')
@@ -23,7 +23,7 @@ def clean_dataframe(df):
 def dataframe_to_table(df, engine, name):
   with engine.begin() as connection:
     df.to_sql(name, con=connection, if_exists='replace')
-    stmt = f"ALTER TABLE {name} ADD PRIMARY KEY (index);"
+    stmt = f"ALTER TABLE {name} ADD PRIMARY KEY (index);" # Vulnerable to sql injection!
     connection.execute(stmt)
 
 def create_tables(engine):
